@@ -22,12 +22,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //번호 자동증가
     private int id;
 
+    @Column(length = 20, unique = true, nullable = false)
     private String username;
+    @Column(nullable = false)
     private String password;
-
+    @Column(nullable = false)
     private String name;
+
     private String website; //웹사이트
     private String bio; //자기소개
+    @Column(nullable = false)
     private String email;
     private String phone;
     private String gender;

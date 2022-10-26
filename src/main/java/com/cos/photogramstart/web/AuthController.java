@@ -7,8 +7,14 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequiredArgsConstructor //final 필드를 DI 할 때 사용
 @Controller // 1.IoC 2.파일을 리턴하는 컨트롤러
@@ -29,7 +35,18 @@ public class AuthController {
     }
 
     @PostMapping("/auth/signup")
-    public String signup(SignupDTO signupDTO) { //key = value
+    public String signup(@Valid SignupDTO signupDTO, BindingResult bindingResult) { //key = value
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errorMap = new HashMap<>();
+
+            for(FieldError error : bindingResult.getFieldErrors()) {
+                errorMap.put(error.getField(), error.getDefaultMessage());
+                System.out.println("==================================");
+                System.out.println(error.getDefaultMessage());
+                System.out.println("==================================");
+            }
+        }
+
         User user = signupDTO.toEntity();
         User userEntity = authService.join(user);
         System.out.println(userEntity);
