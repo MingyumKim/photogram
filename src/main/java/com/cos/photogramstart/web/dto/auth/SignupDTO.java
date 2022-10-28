@@ -6,11 +6,12 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Data
 public class SignupDTO {
 
-    @Max(20)
+    @Size(max = 20)
     private String username;
     @NotBlank
     private String password;
