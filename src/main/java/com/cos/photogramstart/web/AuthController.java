@@ -44,16 +44,11 @@ public class AuthController {
 
             for(FieldError error : bindingResult.getFieldErrors()) {
                 errorMap.put(error.getField(), error.getDefaultMessage());
-                System.out.println("==================================");
-                System.out.println(error.getField());
-                System.out.println(error.getDefaultMessage());
-                System.out.println("==================================");
             }
             throw new CustumValidationException("유효성 검사 실패", errorMap);
         } else {
             User user = signupDTO.toEntity();
-            User userEntity = authService.join(user);
-            System.out.println(userEntity);
+            authService.join(user);
             return "auth/signin";
         }
     }
