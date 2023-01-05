@@ -2,11 +2,13 @@ package com.cos.photogramstart.service;
 
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.domain.user.UserRepository;
+import com.cos.photogramstart.handler.ex.CustumValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +19,7 @@ public class UserService {
     @Transactional
     public User 회원수정(int id, User user) {
         //1. 영속화
-        User userEntity = userRepository.findById(id).get(); //1.무조건 찾음 get() 2.못찾았어 exception 발동 orElseThrow()
+        User userEntity = userRepository.findById(id).orElseThrow(()->{return new CustumValidationException("찾을 수 없는 id 입니다.");});
 
         //2. 영속화 된 오브젝트를 수정 - 더티체킹 (업데이트 완료)
         userEntity.setName(user.getName());
