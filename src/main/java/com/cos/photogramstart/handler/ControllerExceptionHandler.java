@@ -38,7 +38,7 @@ public class ControllerExceptionHandler {
     }
 
     //object return
-    @ExceptionHandler(CustumValidationException.class)
+    @ExceptionHandler(CustumValidationApiException.class)
     public CMResponseDTO<?> validationApiException(CustumValidationApiException e) {
         return new CMResponseDTO<>(-1, e.getMessage(), e.getErrorMap());
     }
